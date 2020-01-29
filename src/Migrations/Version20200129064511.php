@@ -30,7 +30,6 @@ final class Version20200129064511 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('DROP INDEX IDX_A3C664D3AC24F853F675F31B');
     }
 }
