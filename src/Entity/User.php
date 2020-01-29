@@ -31,7 +31,7 @@ class User
     /**
      * @var string
      *
-     * @Mapping\Column(type="string", length=32, nullable=false, unique=true)
+     * @Mapping\Column(type="string", length=32, nullable=false)
      */
     private $login;
 

@@ -31,10 +31,13 @@ final class TweetController extends AbstractFOSRestController
      *
      * @RequestParam(name="authorId", requirements="\d+")
      * @RequestParam(name="text")
+     * @RequestParam(name="async", requirements="0|1", nullable=true)
      */
-    public function postTweetAction(int $authorId, string $text): View
+    public function postTweetAction(int $authorId, string $text, ?int $async): View
     {
-        $success = $this->tweetService->saveTweet($authorId, $text);
+        $success = $async === 1 ?
+            $this->tweetService->saveTweetAsync($authorId, $text) :
+            $this->tweetService->saveTweetSync($authorId, $text);
         $code = $success ? 200 : 400;
 
         return View::create(['success' => $success], $code);
