@@ -14,7 +14,6 @@ use Doctrine\ORM\Mapping;
  *
  * @Mapping\Table(name="tweet")
  * @Mapping\Entity
- * @Mapping\Entity(repositoryClass="App\Repository\TweetRepository")
  * @Mapping\HasLifecycleCallbacks
  */
 class Tweet
@@ -74,5 +73,20 @@ class Tweet
     public function setText(string $text): void
     {
         $this->text = $text;
+    }
+
+    public function toAMQPMessage(): string
+    {
+        return json_encode(['tweetId' => (int)$this->id], JSON_THROW_ON_ERROR, 512);
+    }
+
+    public function toFeed(): array
+    {
+        return [
+            'id' => $this->id,
+            'text' => $this->text,
+            'author' => $this->author->getLogin(),
+            'createdAt' => $this->createdAt->format('Y-m-d h:n:s')
+        ];
     }
 }
